@@ -1,5 +1,6 @@
 from rest_framework.serializers import ModelSerializer
 from .models import Profile
+from hack.users.serializers import UserOutputSerializers
 
 class ProfileInputSerializer(ModelSerializer):
     class Meta:
@@ -13,6 +14,8 @@ class ProfileInputSerializer(ModelSerializer):
 
 
 class ProfileOutputSerilaizer(ModelSerializer):
+    user = UserOutputSerializers()
+
     class Meta:
         model = Profile
-        fields = "__all__"
+        exclude = ["updated_at"]

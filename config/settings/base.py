@@ -4,6 +4,7 @@
 from pathlib import Path
 
 import environ
+import os
 
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 # hack/
@@ -46,16 +47,31 @@ LOCALE_PATHS = [str(BASE_DIR / "locale")]
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'hackathon',
+#         'USER': 'hack',
+#         'PASSWORD': '12345678',
+#         'HOST': 'localhost',  # Set to 'localhost' or the IP address of your PostgreSQL server
+#         'PORT': '5432',       # Default PostgreSQL port
+#     }
+# }
+
+# settings.py
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'hackathon',
-        'USER': 'hack',
-        'PASSWORD': '12345678',
-        'HOST': 'localhost',  # Set to 'localhost' or the IP address of your PostgreSQL server
-        'PORT': '5432',       # Default PostgreSQL port
+        'NAME': os.getenv("NAME"),
+        'USER': os.getenv("USER"),
+        'PASSWORD': os.getenv("PASSWORD"),
+        'HOST': os.getenv("HOST"),
+        'PORT': '5432',  # Change to your RDS port if different
     }
 }
+
+
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 # https://docs.djangoproject.com/en/stable/ref/settings/#std:setting-DEFAULT_AUTO_FIELD
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
