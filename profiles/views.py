@@ -21,6 +21,7 @@ class Profile(APIView):
 
     def patch(self, request):
         #TODO: Does not change profile's user
+        
         profile = profile_update(data=request.data, user=request.user)
         if profile:
             return Response(profile, status.HTTP_200_OK)   #TODO: Change stATUS code
