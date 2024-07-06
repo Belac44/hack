@@ -14,7 +14,7 @@ SECRET_KEY = env(
     default="qAbKc9SNFKuFikjUxu2PjZ0merPYbXSpCX6vtmm1tXCqyAEAQAfrrTUd1Qx6yQUr",
 )
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = ["localhost", "0.0.0.0", "127.0.0.1"]  # noqa: S104
+ALLOWED_HOSTS = ["localhost", "0.0.0.0", "127.0.0.1", "api.dekut-hack.engineersportfolio.com", "www.api.dekut-hack.engineersportfolio.com"]  # noqa: S104
 
 # CACHES
 # ------------------------------------------------------------------------------
