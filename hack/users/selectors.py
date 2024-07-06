@@ -8,7 +8,9 @@ from django.contrib.auth import authenticate
 User = get_user_model()
 
 def user_login(*, request, email, password):
+    
     user = authenticate(request, username=email, password=password)
+
     if user:
         token, _ = Token.objects.get_or_create(user=user)
         return {"Token": token.key}

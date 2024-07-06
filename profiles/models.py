@@ -1,9 +1,11 @@
+from django.contrib.auth import get_user_model
 from django.db import models
 from config.base_model import BaseModel
 
+User = get_user_model()
 
 class Profile(BaseModel):
-    user = models.OneToOneField('users.User', on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     dob = models.DateField(null=True, blank=True)
     gender = models.CharField(max_length=10, null=True, blank=True)
     height = models.FloatField(null=True, blank=True)
@@ -11,6 +13,6 @@ class Profile(BaseModel):
     bio = models.TextField(null=True, blank=True)
     
     def __str__(self):
-        return self.name
+        return self.user.email
 
     
