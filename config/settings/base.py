@@ -47,10 +47,14 @@ LOCALE_PATHS = [str(BASE_DIR / "locale")]
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
 DATABASES = {
-    "default": env.db(
-        "DATABASE_URL",
-        default="postgres://localhost/hack",
-    ),
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'hackathon',
+        'USER': 'hack',
+        'PASSWORD': '12345678',
+        'HOST': 'localhost',  # Set to 'localhost' or the IP address of your PostgreSQL server
+        'PORT': '5432',       # Default PostgreSQL port
+    }
 }
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 # https://docs.djangoproject.com/en/stable/ref/settings/#std:setting-DEFAULT_AUTO_FIELD
@@ -91,6 +95,8 @@ THIRD_PARTY_APPS = [
 
 LOCAL_APPS = [
     "hack.users",
+    'profiles',
+    "allergy",
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps

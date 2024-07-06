@@ -1,45 +1,26 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.messages.views import SuccessMessageMixin
-from django.urls import reverse
-from django.utils.translation import gettext_lazy as _
-from django.views.generic import DetailView
-from django.views.generic import RedirectView
-from django.views.generic import UpdateView
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.views import APIView
+from rest_framework.permissions import AllowAny
+from .services import user_create
+from .selectors import user_login
+from .serializers import UserLogInSerializer
 
-from hack.users.models import User
+class Register(APIView):
 
+    permission_classes = [AllowAny]
 
-class UserDetailView(LoginRequiredMixin, DetailView):
-    model = User
-    slug_field = "id"
-    slug_url_kwarg = "id"
-
-
-user_detail_view = UserDetailView.as_view()
+    def post(self, request):
+        tokenObj = user_create(data=request.data)
+        return Response(tokenObj, status.HTTP_201_CREATED)
 
 
-class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
-    model = User
-    fields = ["name"]
-    success_message = _("Information successfully updated")
+class LogIn(APIView):
 
-    def get_success_url(self):
-        # for mypy to know that the user is authenticated
-        assert self.request.user.is_authenticated
-        return self.request.user.get_absolute_url()
+    permission_classes = [AllowAny]
 
-    def get_object(self):
-        return self.request.user
-
-
-user_update_view = UserUpdateView.as_view()
-
-
-class UserRedirectView(LoginRequiredMixin, RedirectView):
-    permanent = False
-
-    def get_redirect_url(self):
-        return reverse("users:detail", kwargs={"pk": self.request.user.pk})
-
-
-user_redirect_view = UserRedirectView.as_view()
+    def post(self, request):
+        serialized = UserLogInSerializer(data=request.data)
+        serialized.is_valid(raise_exception=True)
+        tokenObj = user_login(request=request, **serialized.validated_data)
+        return Response(tokenObj, status.HTTP_200_OK)
