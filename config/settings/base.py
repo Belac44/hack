@@ -58,7 +58,6 @@ LOCALE_PATHS = [str(BASE_DIR / "locale")]
 #     }
 # }
 
-# settings.py
 
 DATABASES = {
     'default': {
