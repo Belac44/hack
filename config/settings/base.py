@@ -4,12 +4,14 @@
 from pathlib import Path
 
 import environ
-import os
+
 
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
+
 # hack/
 APPS_DIR = BASE_DIR / "hack"
 env = environ.Env()
+
 
 READ_DOT_ENV_FILE = env.bool("DJANGO_READ_DOT_ENV_FILE", default=False)
 
@@ -17,10 +19,11 @@ if READ_DOT_ENV_FILE:
     # OS environment variables take precedence over variables from .env
     env.read_env(str(BASE_DIR / ".env"))
 
+
 # GENERAL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#debug
-DEBUG = env("DEBUG", True)
+DEBUG = env.bool("DEBUG", default=False)
 # Local time zone. Choices are
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # though not all of them may be available with every OS.
