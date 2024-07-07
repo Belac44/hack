@@ -4,7 +4,7 @@
 from pathlib import Path
 
 import environ
-
+import os
 
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 
@@ -15,15 +15,16 @@ env = environ.Env()
 
 READ_DOT_ENV_FILE = env.bool("DJANGO_READ_DOT_ENV_FILE", default=False)
 
+
 if READ_DOT_ENV_FILE:
     # OS environment variables take precedence over variables from .env
     env.read_env(str(BASE_DIR / ".env"))
 
-print("Reading from .env file: %s" % str(BASE_DIR / ".env"))
+
 # GENERAL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#debug
-DEBUG = env.bool("DEBUG", default=False)
+DEBUG = os.getenv("DEBUG", default=False)
 # Local time zone. Choices are
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # though not all of them may be available with every OS.
@@ -66,9 +67,9 @@ LOCALE_PATHS = [str(BASE_DIR / "locale")]
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env("DBNAME"),
-        'USER': env("DBUSER"),
-        'PASSWORD':env("DBPASSWORD"),
+        'NAME': os.getenv("DBNAME"),
+        'USER': os.getenv("DBUSER"),
+        'PASSWORD': os.getenv("DBPASSWORD"),
         'HOST': "database-2.cx4cu8esmrvv.us-east-1.rds.amazonaws.com",
         'PORT': 5432,  
     }
