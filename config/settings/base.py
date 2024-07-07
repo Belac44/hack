@@ -65,7 +65,7 @@ DATABASES = {
         'NAME': os.getenv("DBNAME"),
         'USER': os.getenv("DBUSER"),
         'PASSWORD': os.getenv("DBPASSWORD"),
-        'HOST': os.getenv("DBHOST"),
+        'HOST': "database-2.cx4cu8esmrvv.us-east-1.rds.amazonaws.com",
         'PORT': '5432',  
     }
 }
